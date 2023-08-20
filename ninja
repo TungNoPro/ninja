@@ -36,21 +36,33 @@ local TabFour = Window:MakeTab({
 local Section = TabFour:AddSection({
     Name = "discord.gg/7QtGeuzdGc"
 })
-    
+
 local Section = Tab:AddSection({
-    Name = "Farm script"
+    Name = "Farm Vip Bag"
 })
 
-Tab:AddButton({
-    Name = "Wins Farms",
-    Callback = function()
-        loadstring(game:HttpGet("https://raw.githubusercontent.com/ToraIsMe/ToraIsMe/main/0Ninja"))()
+                
+Tab:AddToggle({
+    Name = "Farm Vip Bag Map 5 (Be near with vip bag 5) - Fast Punch",
+    Default = false,
+    Callback = function(Value)
+            _G.autoFarm = Value
+        while _G.autoFarm and wait() do
+            local args = {
+    [1] = "Area5",
+    [2] = "PunchingBag",
+    [3] = 7
+}
+
+game:GetService("ReplicatedStorage"):WaitForChild("Remotes"):WaitForChild("DoAction"):FireServer(unpack(args))
+wait(0)
+end
     end
 })
 
-    
-    local Section = Tab:AddSection({
-    Name = "Anti Afk"
+
+  local Section = Tab:AddSection({
+    Name = "Anti Afk - Click Once"
 })
     Tab:AddButton({
     Name = "Anti Afk",
@@ -78,31 +90,37 @@ ab.Text="Roblox tried to kick u but i kicked him instead"wait(2)ab.Text="Status 
         })
 
 local Section = Tab:AddSection({
-    Name = "Farm Vip Bag"
+    Name = "Auto Wins"
 })
 
-                
-Tab:AddToggle({
-    Name = "Farm Vip Bag Map 5 (Be near with it) - Fast Punch",
-    Default = false,
-    Callback = function(Value)
-            _G.autoFarm = Value
-        while _G.autoFarm and wait() do
-            local args = {
-    [1] = "Area5",
-    [2] = "PunchingBag",
-    [3] = 7
-}
 
-game:GetService("ReplicatedStorage"):WaitForChild("Remotes"):WaitForChild("DoAction"):FireServer(unpack(args))
-wait(0)
+Tab:AddParagraph("NOTE:", "Trying To Fight A Boss With A Lot More Strength Than You Will Cause The Game To Kick You. \nYou Have A 100% Win Chance.")
+
+for i, v in pairs(game:GetService("Workspace").BillboardGuis:GetChildren()) do
+	if v:IsA("Folder") then
+		local area = tostring(v.Name)
+		local Section = Tab:AddSection({
+			Name = tostring(v.Name):gsub("Area", "Area ") .. " Auto Fight"
+		})
+		for i = 1, 5 do
+			Tab:AddToggle({
+				Name = "Fight Boss " .. tostring(i),
+				Default = false,
+				Callback = function(Value)
+					getgenv().autofight = Value
+					while autofight == true do
+						game:GetService("ReplicatedStorage").Remotes.FightOver:FireServer(area, i)
+						wait(3)
+					end
+				end
+			})
+		end
+	end
 end
-    end
-})
 
-local Section = Tab:AddSection({
-    Name = "NOTE: Click on the Anti Afk Script once when it show up (ONLY ONCE)"
-})
+    
+  
+
     
 local Section = TabTwo:AddSection({
     Name = "Auto Hatch Fast"
