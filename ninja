@@ -196,5 +196,3 @@ TabThree:AddDropdown({
                 end
             end
     })
-    
-end
